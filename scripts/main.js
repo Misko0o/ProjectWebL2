@@ -4,19 +4,19 @@
  *  Static data (carousel images & captions, currency names)
  * --------------------------------------------------------------------------*/
 const carouselImages = [
-    "https://images.radio-canada.ca/q_auto,w_1250/v1/ici-info/16x9/accident-collision-becancour-autoroute-30.jpg",
-    "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2FHR4SV7STTQZOUPLGBYGC4GQLGM_size-normalized%252EJPG&w=992&h=662",
-    "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2F7U3ATAHS4UI6VABFLU2IS5UKZA%252Ejpg&w=992&h=662",
-    "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2FRI5G7YWTEEI63LELZV62AULI5E_size-normalized%252Ejpg&w=992&h=662",
-    "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2F7SPM5SHZULAYCB5HCCGSOGOV44%252Ejpg&w=992&h=662"
+    "https://images.rtl.fr/~c/770v513/rtl/www/1693008-leon-marchand-avec-sa-medaille-d-or-du-200-m-brasse-le-31-juillet-2024-a-paris-la-defense.jpg",
+    "https://media.ouest-france.fr/v1/pictures/MjAyNTA1Y2FiZWVjYjNkZjMwMDUxMTQzMTA3Mjg2YWE4ZWY2NTU?width=630&height=354&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=9dd4f95237b78e35ea3f867c54d81635c1cbd1edc64c0144b93ba2bf912bb2b3",
+    "https://img.centrefrance.com/suCPCazmGeZgtz2rJaKldlt9V38ACrDPEnQdgXs83sc/rs:fit:657:438:1:0/bG9jYWw6Ly8vMDAvMDAvMDcvMzcvNDUvMjAwMDAwNzM3NDUwMw.webp",
+    "https://les-as-de-l-info.s3.amazonaws.com/images/1746475776_F1%20LEGO%20%232.png_960_540.png",
+    "https://images.ladepeche.fr/api/v1/images/view/681a00d4c984a794cf060432/large/image.jpg?v=1"
   ];
   
   const imageText = [
-    "Accident majeur à Bécancour : trois morts et deux blessés",
-    "Is Bougainville the next battleground between China and the U.S.?",
-    "Trump condamné pour outrage, menacé d'incarcération à son procès à New York",
-    "Quatre suspects mis en examen pour terrorisme après l'attentat en Russie",
-    "Pourquoi les moulins à vent ont-ils disparu ?"
+    "Fatigué, battu pour sa rentrée... Léon Marchand accuse-t-il le coup des Jeux olympiques ?",
+    "Le Beaulieu Sport Football inaugure sa section féminine loisir",
+    "Retrouvez tous les résultats sportifs du 2 au 4 mai en Eure-et-Loir",
+    "Les As du sport: Des Formules 1 en Lego!",
+    "Asthme : les 3 conditions pour faire du sport en toute sécurité"
   ];
   
   const controlImagesOptions = ["../images/not_colored_circle.png", "../images/color_circle.png"];
