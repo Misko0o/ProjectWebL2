@@ -182,8 +182,7 @@ const demoOdds = [
     carouselStart();
     fetchAndDisplayNews("");
     embedHighlight();
-    getCurrencyPrices();
-  
+    renderOdds();
     // search bar ---------------------------------------------------------------
     document.getElementById("searchInput").addEventListener("input", (e) => {
       fetchAndDisplayNews(e.target.value);
