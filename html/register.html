@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    <script src="../scripts/register.js"></script>
+</head>
+<body>
+    <form id="registerForm" method="post">
+        <div id="container">
+            <div id="img-container">
+                <img src="../images/logo.png" alt="">
+            </div>
+            
+            <div id="inputs">
+                <h1>Sign-up</h1>
+                <input type="text" id="name" name="name" placeholder="Type your name">
+                <input type="text" id="surname" name="surname" placeholder="Type your surname">
+                <input type="text" id="email" name="email" placeholder="Type your email">
+                <input type="password" id="password" name="password" placeholder="Type your password">
+                <input type="password" id="repPassword" name="Repeat password" placeholder="Repeat password">
+                <select id="security-question">
+                    <option value="0">In what city did you first meet your spouse?</option>
+                    <option value="1">What was the name of your first pet?</option>
+                    <option value="2">In what city did you attend your first school?</option>
+                    <option value="3">What is your favorite vacation spot?</option>
+                </select>
+                <div id="security-answer">
+                    <p>Please write down the answer to the question somewhere, it will be needed to recover your password. </p>
+                    <input type="text" id="answerInput" name="Security answer" placeholder="Type your answer">
+                </div>
+
+                <div id="invalidCredentials"></div>
+                
+            </div>
+    
+            <div id="buttons"> 
+                <input type="submit" name="reg_subm" id="reg_subm" value="Register">
+                <p>Account already created ? <a href="login.html">Sign-in!</a></p>
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1 {
+    background-color: white;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 0;
+    text-align: center;
+}
+
+.news-summary, .full-news {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 5px;
+    max-width: 800px; /* Ограничиваем ширину для улучшения читабельности */
+}
+
+.news-summary h2, .full-news h1 {
+    color: #0056b3;
+}
+
+.news-summary h2 a, .full-news h1 a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.news-summary h2 a:hover, .full-news h1 a:hover {
+    text-decoration: underline;
+}
+
+.news-summary p, .full-news p {
+    font-size: 16px;
+}
+
+a {
+    color: #0066cc;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.auteur-date {
+    margin-top: 4em;
+    font-size: 17px;
+    text-align: right;
+}
+
+.auteur-date p{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+
+.container {
+    display: flex;
+    justify-content: center; /* Горизонтальное центрирование */
+    align-items: center; /* Вертикальное центрирование */
+    height: 100%; /* Занимает всю высоту видимой области */
+}
+
+.container img {
+    max-width: 100%; /* Ограничение ширины изображения */
+    max-height: 100%; /* Ограничение высоты изображения */
+}

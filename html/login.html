@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    <script src="../scripts/login.js"></script>
+</head>
+<body>
+    <form id="loginForm" method="post">
+        <div id="container">
+            <div id="img-container">
+                <img src="../images/logo.png" alt="">
+            </div>
+            
+            <div id="inputs">
+                <h1>Sign-in</h1>
+                <input type="text" id="email" name="email" placeholder="Type your email">
+                <input type="password" id="password" name="password" placeholder="Type your password">
+                <a href="#">Forgot your password ?</a>
+                <div id="invalidCredentials">
+                    <div>
+                        Incorrect email or password!
+                    </div>
+                </div>
+            </div>
+    
+            <div id="buttons"> 
+                <input type="submit" name="login_subm" id="login_subm" value="Log-in">
+                <p>There is no account yet ? <a href="register.html">Sign-up!</a></p>
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>

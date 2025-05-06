@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create post</title>
+    <link rel="stylesheet" type="text/css" href="../styles/createPost.css"></head>
+    <script src="../scripts/create_post.js"></script>
+<body>
+    <h1>Laissez vous guider pour créer votre petite annonce à paraître sur le site</h1>
+    
+    <form id="feedbackForm">
+        <label for="titre"></label>
+        <input type="text" id="titre" name="titre" required placeholder="Titre de l'annonce">
+
+        <label for="news"></label>
+        <textarea id="news" name="news" required placeholder="Écrivez votre annonce ici..."></textarea>
+
+        <label for="image"></label>
+        <input type="text" id="image" name="image" required placeholder="Lien vers l'image">
+
+        <label id="selectLabel" for="theme-choise">Indiquez le sujet sur lequel porte votre article</label>
+        <select id="theme-choise">
+            <option value="0">Politique</option>
+            <option value="1">Economie</option>
+            <option value="2">Sport</option>
+            <option value="3">Culture</option>
+            <option value="4">Science</option>
+            <option value="5">Voyage</option>
+        </select>
+        
+        <button type="submit"> Valider</button>
+    </form>
+    
+    <div id="reponseContaineur"></div>
+    
+</body>
+</html>
+
+
+

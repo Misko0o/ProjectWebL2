@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main page</title>
+    <link rel="stylesheet" type="text/css" href="../styles/main.css">
+    <script src="../scripts/main.js"></script>
+</head>
+<body>
+    <header id="header">
+        <div id="icon-bar">
+            <div id="icons">
+                <img id="frst_img" src="https://point.md/static/svg/new-icons/menu.svg">
+                <img src="https://point.md/static/svg/new-icons/search-1.svg" id="contentSearchBtn">
+            </div>
+    
+            <div id="logo">
+                <img src="../images/logo_cutted.png">
+            </div>
+    
+            <div id="blanc">
+                <button id="btn">Login</button>
+            </div>
+        </div>
+
+        <div id="themes-bar">
+            <hr>
+            <div id="themes-container">
+                <p>Toutes</p>
+                <p>Politique</p>
+                <p>Economie</p>
+                <p>Sport</p>
+                <p>Culture</p>
+                <p>Science</p>
+                <p>Voyage</p>
+                <button id="addArticle">Report news +</button>
+            </div>
+            <hr>
+        </div>
+    </header>
+
+    <div id="carousel-container">
+        <div id="carousel"></div>
+        <div id="image-controller"></div>
+    </div>
+
+
+    <div id="content-and-widgets">
+        <div id="content-container">
+            <div id="content-header">
+                <h1>News From Nice:</h1>
+                <div>
+                    <img src="../images/shest.png">
+                    <h3>Sources</h3>
+                </div>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search">
+            <div id="noResults"></div>
+
+        </div>
+
+        
+        <div id="widgets-container">
+
+            <div id="weather-widget">
+                <div id="weather-container">
+                    <h2>Weather Today</h2>
+                    <input type="text" id="city" placeholder="Enter city">
+                    <button id="weatherSearchBtn" onclick="getWeather()">Search</button>
+            
+                    <img id="weather-icon" alt="Weather Icon">
+            
+                    <div id="temp-div"></div>
+                    <div id="weather-info"></div>
+                    <div id="hourly-forecast"></div>
+                </div>
+            </div>
+
+            <div id="currency-converter">
+                <div id="converter-header">
+                    <p>Currency converter</p>
+                </div>
+        
+                <div id="currency-container">
+                
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+    
+    
+
+
+    
+    
+</body>
+</html>
