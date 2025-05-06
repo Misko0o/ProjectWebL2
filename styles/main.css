@@ -22,6 +22,8 @@ body{
 }
 
 #themes-container{
+    color: #abb2dd;
+    background-color: #070D30;
     display: flex;
     padding-left: 20%;
     padding-right: 20%;
