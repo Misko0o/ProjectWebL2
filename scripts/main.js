@@ -153,77 +153,23 @@ const carouselImages = [
   }
   
   /* --------------------------------------------------------------------------
-   *  Currency converter (unchanged)
-   * --------------------------------------------------------------------------*/
-  function createCurrencies() {
-    const images = [
-      "../images/eu.webp",
-      "../images/US.svg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png",
-      "https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/switzerland-flag-icon.png"
-    ];
-    const symbols = ["€", "$", "£", "SFr"];
-    const container = document.getElementById("currency-container");
-    currencyNames.forEach((code, i) => {
-      const cur = document.createElement("div");
-      cur.className = "currency";
-      cur.innerHTML = `
-        <div><img src="${images[i]}" alt="${code}"><p>${code}</p></div>
-        <div><input id="currency${i}"><p>${symbols[i]}</p></div>`;
-      container.appendChild(cur);
+ * 5. Demo odds widget (instead of currency converter)
+ * --------------------------------------------------------------------------*/
+const demoOdds = [
+    { match: "Man City vs Real Madrid",  home: 1.95, draw: 3.80, away: 3.60 },
+    { match: "Arsenal vs Bayern",       home: 2.20, draw: 3.50, away: 3.10 },
+    { match: "Barcelona vs PSG",        home: 2.05, draw: 3.70, away: 3.40 },
+    { match: "Juventus vs Liverpool",   home: 2.80, draw: 3.30, away: 2.45 }
+  ];
+  
+  function renderOdds() {
+    const tbl = document.getElementById("odds-table");
+    if (!tbl) return;
+    demoOdds.forEach(o => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${o.match}</td><td>${o.home.toFixed(2)}</td><td>${o.draw.toFixed(2)}</td><td>${o.away.toFixed(2)}</td>`;
+      tbl.appendChild(tr);
     });
-  }
-  
-  function getCurrencyFromAPI(from, to, amount) {
-    return fetch(`https://api.fastforex.io/convert?from=${from}&to=${to}&amount=${amount}&api_key=6f04750422-4082314d17-scjrs9`)
-      .then(r => r.json())
-      .then(r => r.result[to]);
-  }
-  
-  function createEventHandlers() {
-    const inputs = document.querySelectorAll(".currency input");
-    inputs.forEach((inp, i) => {
-      inp.addEventListener("input", () => {
-        const val = inp.value || "1";
-        if (!/^[0-9]+$/.test(val)) return;
-        inputs.forEach((other, j) => {
-          if (j === i) return;
-          getCurrencyFromAPI(currencyNames[i], currencyNames[j], val).then(res => other.value = res);
-        });
-      });
-    });
-  }
-  
-  
-  function createEventHandlers() {
-    const inputs = document.querySelectorAll(".currency input");
-    inputs.forEach((inp, i) => {
-      inp.addEventListener("input", () => {
-        const base = i;
-        let val = inp.value;
-        if (!val) val = inp.value = "1";
-        if (!/^[0-9]+$/.test(val)) return;
-  
-        inputs.forEach((destInp, j) => {
-          if (j === base) return;
-          getCurrencyFromAPI(currencyNames[base], currencyNames[j], val).then(
-            (v) => (destInp.value = v)
-          );
-        });
-      });
-    });
-  }
-  
-  function getCurrencyPrices() {
-    createCurrencies();
-    const inputs = document.querySelectorAll(".currency input");
-    inputs[0].value = 100;
-    currencyNames.slice(1).forEach((name, idx) => {
-      getCurrencyFromAPI(currencyNames[0], name, 100).then((v) =>
-        (inputs[idx + 1].value = v)
-      );
-    });
-    createEventHandlers();
   }
   
   // -----------------------------------------------------------------------------
