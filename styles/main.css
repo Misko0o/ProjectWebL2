@@ -359,6 +359,11 @@ body{
   #video-widget, #odds-widget {
     margin-top: 16px;
   }
+
+  #matches-feed       { margin-top: 24px; }
+.match-card         { border: 1px solid #ccc; margin: 6px 0; cursor: pointer; }
+.match-head         { display: flex; justify-content: space-between; padding: 6px 10px; background: #f7f7f7; }
+.match-stats        { background: #fafafa; padding: 6px 10px; }
   
 
 #widgets-container{

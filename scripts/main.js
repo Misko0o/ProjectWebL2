@@ -172,8 +172,52 @@ const demoOdds = [
     });
   }
   
+/* --------------------------------------------------------------------------
+ * 6. Matches feed (demo data with collapsible stats)
+ * --------------------------------------------------------------------------*/
+const demoMatches = [
+  { id: 1, home: "Man City", away: "Real Madrid", time: "Sat 19:30" },
+  { id: 2, home: "Bayern",   away: "Juventus",   time: "Sun 21:45" },
+  { id: 3, home: "PSG",      away: "Barcelona",  time: "Mon 20:00" }
+];
+
+const demoStats = {
+  1: { possession: "55 / 45", shots: "15 / 8", xg: "2.3 / 1.0" },
+  2: { possession: "58 / 42", shots: "12 / 11", xg: "1.9 / 1.5" },
+  3: { possession: "49 / 51", shots: "10 / 13", xg: "1.1 / 1.6" }
+};
+
+function loadMatches() {
+  const feed = document.getElementById("matches-feed");
+  if (!feed) return;
+  demoMatches.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "match-card";
+    card.innerHTML = `
+      <div class="match-head"><span>${m.home}</span><span>${m.time}</span><span>${m.away}</span></div>
+      <div class="match-stats" id="stats-${m.id}" hidden></div>`;
+    card.querySelector(".match-head").addEventListener("click", () => toggleStats(m.id));
+    feed.appendChild(card);
+  });
+}
+
+function toggleStats(id) {
+  const box = document.getElementById(`stats-${id}`);
+  if (box.hasAttribute("hidden")) {
+    if (!box.hasAttribute("data-loaded")) {
+      const st = demoStats[id];
+      box.innerHTML = `<p>Possession: ${st.possession}</p><p>Shots: ${st.shots}</p><p>xG: ${st.xg}</p>`;
+      box.setAttribute("data-loaded", "1");
+    }
+    box.removeAttribute("hidden");
+  } else {
+    box.setAttribute("hidden", "true");
+  }
+}
+
+
   // -----------------------------------------------------------------------------
-  // 6. Main entry
+  // 7. Main entry
   // -----------------------------------------------------------------------------
   
   window.onload = () => {
