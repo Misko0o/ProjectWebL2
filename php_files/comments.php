@@ -1,6 +1,5 @@
 <?php
     $id = $_GET['id'];
-    
     if (isset($_GET['json'])) {
         header('Content-Type: application/json');
         echo json_encode(get_comments($id)); // функция, читающая CSV
@@ -43,34 +42,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comments</title>
-    <script src="../scripts/comments.js"></script>
-    <link rel="stylesheet" type="text/css" href="../styles/comments.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments</title>
+  <link rel="stylesheet" href="../styles/comments.css">
 </head>
 
 <body>
-    <div id="content-container">
-        <div id="comments-container">
-            <?php
-                for($i = 0; $i < count($comments); $i++){
-                    ?>
-                        <div class="comment" id="<?php echo $i; ?>">
-                            <h3><?php echo getNameAndSurnameByEmail(trim($comments[$i]["author"])); ?></h3>
-                            <p><?php echo $comments[$i]["text"]; ?></p>
-                            <p><?php echo $comments[$i]["date"]; ?></p>
-                        </div>
-                    <?php
-                }
-            ?>
-        </div>
-        <div id="create-comment-container">
-            <input type="text">
-            <button>post</button>
-        </div>
-        
+  <div id="content-container">
+
+    <!-- список комментариев -->
+    <div id="comments-list">
+      <?php
+        for ($i = 0; $i < count($comments); $i++) {
+          ?>
+            <div class="comment" id="<?php echo $i; ?>">
+              <h3><?php echo getNameAndSurnameByEmail(trim($comments[$i]['author'])); ?></h3>
+              <p><?php echo $comments[$i]['text']; ?></p>
+              <p><?php echo $comments[$i]['date']; ?></p>
+            </div>
+          <?php
+        }
+      ?>
     </div>
-    
+
+    <!-- форма добавления -->
+    <div id="create-comment-container">
+      <input type="text" placeholder="Write a comment…">
+      <button>Post</button>
+    </div>
+
+  </div>
+
+  <!-- скрипт после DOM и как ES-модуль -->
+  <script type="module" src="../scripts/comments.js"></script>
 </body>
 </html>
