@@ -1,6 +1,12 @@
 <?php
     $id = $_GET['id'];
-
+    
+    if (isset($_GET['json'])) {
+        header('Content-Type: application/json');
+        echo json_encode(get_comments($id)); // функция, читающая CSV
+        exit;
+    }
+    
     function getNameAndSurnameByEmail($email){
         if (($handle = fopen("../csv_files/users.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
