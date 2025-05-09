@@ -23,88 +23,159 @@ const carouselImages = [
   const currencyNames = ["EUR", "USD", "GBP", "CHF"];
   
 /* --------------------------------------------------------------------------
- * 2. Demo match stats (keyed по id новости)
+ * 2. Upcoming matches (next week)
  * --------------------------------------------------------------------------*/
-const demoMatchStats = {
-  // пример: id новости 1
-  1: {
-    score: "Paris SG 3 – 1 Marseille",
-    possession: "62% / 38%",
-    shots: "15 / 9 (On target 7 / 3)",
-    mvp: {
-      name: "Kylian Mbappé",
-      stats: "2 гола · 1 голевая · 4 ударов в створ"
-    }
+/* === 1.  STATIC LIST OF MATCHES  ======================================= */
+const upcomingMatches = [
+  {
+    id: 101,
+    sport: "Tennis",
+    match: "Roland-Garros QF : Carlos Alcaraz vs Jannik Sinner",
+    date:  "14 mai 2025 14:00",
+    link:  "https://www.france.tv/sport/roland-garros/direct.html"
   },
-  2: {
-    score: "Chelsea 2 – 2 Liverpool",
-    possession: "48% / 52%",
-    shots: "12 / 14 (On target 5 / 6)",
-    mvp: {
-      name: "Mohamed Salah",
-      stats: "1 гол · 1 пас · 90% пас точность"
-    }
+  {
+    id: 102,
+    sport: "Football",
+    match: "Ligue 1 : Lyon vs Marseille",
+    date:  "17 mai 2025 21:00",
+    link:  "https://www.amazon.fr/gp/video/detail/0LIGUE1"
+  },
+  {
+    id: 103,
+    sport: "Rugby",
+    match: "Top 14 : Toulouse vs La Rochelle",
+    date:  "15 mai 2025 20:45",
+    link:  "https://www.canalplus.com/direct/"
   }
-  // добавь остальные id при желании
-};
+];
+
+/* === 2.  RENDER FUNCTION  ============================================= */
+function renderMatches() {
+  const ul = document.getElementById("matches-list");
+  if (!ul) return;
+  ul.innerHTML = "";                       // очистить старый вывод
+  upcomingMatches.forEach(m => {
+    const li = document.createElement("li");
+    li.className = "match-card";
+    li.innerHTML =
+      `<div class="match-head">
+         <span class="sport">${m.sport}</span>
+         <span class="teams">${m.match}</span>
+         <span class="time">${m.date}</span>
+       </div>`;
+    li.addEventListener("click", () => window.open(m.link, "_blank"));
+    ul.appendChild(li);
+  });
+}
 
 
-  /* --------------------------------------------------------------------------
-   *  News fetch & render
-   * --------------------------------------------------------------------------*/
-  function fetchAndDisplayNews(searchStr) {
-    fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem("theme")}`)
-      .then(r => r.json())
-      .then(data => {
-        const container = document.getElementById("content-container");
-        container.querySelectorAll(".article").forEach(a => container.removeChild(a));
-        const infoDiv = document.getElementById("noResults");
-        if (!data.length) {
-          infoDiv.textContent = "Sorry, your search returned no results :(";
-          infoDiv.style.display = "block";
-          return;
-        }
-        infoDiv.style.display = "none";
-  
-        data.forEach(news => {
-          const article = document.createElement("div");
-          article.className = "article";
-          article.id = news.id;
-  
-          const imgContainer = document.createElement("div");
-          imgContainer.className = "img-container";
-          const img = document.createElement("img");
-          img.src = news.image;
-          img.loading = "lazy";
-          imgContainer.appendChild(img);
-          imgContainer.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-  
-          const articleText = document.createElement("div");
-          articleText.className = "article-text";
-          const h2 = document.createElement("h3");
-          h2.className = "title";
-          h2.textContent = news.title;
-          h2.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-          const desc = document.createElement("p");
-          desc.className = "desc";
-          desc.textContent = news.content;
-          const dateAndBtn = document.createElement("div");
-          dateAndBtn.id = "date-and-btn";
-          const date = document.createElement("p");
-          date.textContent = news.date;
-          const commentBtn = document.createElement("button");
-          commentBtn.textContent = "View comments";
-          commentBtn.addEventListener("click", () => window.location = `../php_files/comments.php?id=${news.id}`);
-          dateAndBtn.append(date, commentBtn);
-  
-          articleText.append(h2, desc, dateAndBtn);
-          article.append(imgContainer, articleText);
-          container.appendChild(article);
-        });
-      })
-      .catch(err => console.error("Ошибка загрузки новостей:", err));
-  }
-  
+
+
+function fetchAndDisplayNews(searchStr) {
+  fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem("theme")}`)
+    .then(r => r.json())
+    .then(data => {
+      const container = document.getElementById("content-container");
+      container.querySelectorAll(".article").forEach(a => container.removeChild(a));
+      const infoDiv = document.getElementById("noResults");
+      if (!data.length) {
+        infoDiv.textContent = "Sorry, your search returned no results :(";
+        infoDiv.style.display = "block";
+        return;
+      }
+      infoDiv.style.display = "none";
+
+      data.forEach(news => {
+        const article = document.createElement("div");
+        article.className = "article";
+        article.id = news.id;
+
+        /* картинка */
+        const imgC = document.createElement("div");
+        imgC.className = "img-container";
+        const img = document.createElement("img");
+        img.src = news.image;
+        img.loading = "lazy";
+        imgC.appendChild(img);
+
+        /* клик = переход */
+        img.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
+
+        /* текстовый блок */
+        const txt = document.createElement("div");
+        txt.className = "article-text";
+        const h2 = document.createElement("h3");
+        h2.className = "title";
+        h2.textContent = news.title;
+        h2.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
+        const desc = document.createElement("p");
+        desc.className = "desc";
+        desc.textContent = news.content;
+
+        /* дата + комментарии + лайк */
+        const meta = document.createElement("div");
+        meta.id = "date-and-btn";
+        const date = document.createElement("p");
+        date.textContent = news.date;
+        const cmBtn = document.createElement("button");
+        cmBtn.textContent = "View comments";
+        cmBtn.addEventListener("click", () => window.location = `../php_files/comments.php?id=${news.id}`);
+
+        /* ---- like ---- */
+        const likeWrap = document.createElement("div");
+        likeWrap.className = "like-wrap";
+        const likeBtn = document.createElement("span");
+        likeBtn.className = "like-btn";
+        likeBtn.textContent = "👍";
+        const likeCnt = document.createElement("span");
+        likeCnt.className = "like-cnt";
+        likeCnt.textContent = news.likes ?? 0;
+
+        likeWrap.append(likeBtn, likeCnt);
+        likeBtn.addEventListener("click", () => handleLike(news.id, likeCnt));
+
+        meta.style.display = "flex";
+        meta.style.justifyContent = "space-between";
+        meta.append(date, cmBtn, likeWrap);
+
+        txt.append(h2, desc, meta);
+        article.append(imgC, txt);
+        container.appendChild(article);
+      });
+    })
+    .catch(e => console.error("fetch news", e));
+}
+
+/* ---------- like logic ---------- */
+function handleLike(id, cntSpan){
+  // избегаем двойного лайка от одного пользователя
+  if(localStorage.getItem(`liked_${id}`)) return;
+  fetch("../php_files/like.php", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({id})
+  }).then(r=>r.json()).then(d=>{
+    cntSpan.textContent = d.likes;
+    localStorage.setItem(`liked_${id}`, "1");
+  }).catch(console.error);
+}
+
+function pollLikes(){
+  const ids = Array.from(document.querySelectorAll('.article')).map(a=>a.id);
+  if(!ids.length) return;
+  fetch(`../php_files/likes.php?ids=${ids.join(',')}`)
+    .then(r=>r.json())
+    .then(map=>{
+      ids.forEach(id=>{
+        const span = document.querySelector(`#content-container .article[id='${id}'] .like-cnt`);
+        if(span && map[id]!==undefined) span.textContent = map[id];
+      });
+    }).catch(()=>{});
+}
+setInterval(pollLikes, 10000); // 10 с
+
+
   /* --------------------------------------------------------------------------
    *  Carousel
    * --------------------------------------------------------------------------*/
@@ -242,6 +313,50 @@ function toggleStats(id) {
   }
 }
 
+/* ──────────────────────────────────────────────────────────────
+ * 6.  Theme toggle (dark / light)
+ * ──────────────────────────────────────────────────────────────*/
+function applyTheme(th) {
+  document.documentElement.dataset.theme = th;
+  localStorage.setItem('themePref', th);
+}
+
+function initThemeToggle() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;                     // кнопка не нарисовалась → выходим
+
+  const saved = localStorage.getItem('themePref') || 'light';
+  applyTheme(saved);
+  btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+}
+
+/* ---------- demo live-scores ---------- */
+function getLiveScores(){
+  // в реальном проекте заменить на fetch('/api/live_scores.php')
+  return Promise.resolve([
+    "Ligue 1 · PSG 2-0 Lyon (70')",
+    "Premier League · Arsenal 1-1 Chelsea (HT)",
+    "Roland-Garros · Alcaraz def. Zverev 6-4 6-3"
+  ]);
+}
+
+function startLiveTicker(){
+  const span = document.getElementById('ticker-text');
+  if(!span) return;
+
+  async function update(){
+    const scores = await getLiveScores();
+    span.textContent = scores.join("   ⚽   ");
+  }
+  update();
+  setInterval(update, 15000);   // каждые 15 секунд
+}
 
   // -----------------------------------------------------------------------------
   // 7. Main entry
@@ -254,6 +369,10 @@ function toggleStats(id) {
     fetchAndDisplayNews("");
     embedHighlight();
     renderOdds();
+    renderMatches();
+    initThemeToggle();          
+    startLiveTicker(); 
+
     // search bar ---------------------------------------------------------------
     document.getElementById("searchInput").addEventListener("input", (e) => {
       fetchAndDisplayNews(e.target.value);

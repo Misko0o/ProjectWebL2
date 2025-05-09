@@ -9,19 +9,19 @@
 <body>
     <header id="header">
         <div id="icon-bar">
-            <div id="icons">
-                <img id="frst_img" src="https://point.md/static/svg/new-icons/menu.svg">
-                <img src="https://point.md/static/svg/new-icons/search-1.svg" id="contentSearchBtn">
+            <div id="logo-left">
+              <img src="../images/logo_cutted.png" alt="Site Logo">
             </div>
-    
-            <div id="logo">
-                <img src="../images/logo_cutted.png">
+          
+            <div id="live-ticker">
+              <span id="ticker-text">Loading live scores…</span>
             </div>
-    
+          
             <div id="blanc">
-                <button id="btn">Login</button>
+              <button id="themeToggle">🌙</button>
+              <button id="btn">Login</button>
             </div>
-        </div>
+          </div>
 
         <div id="themes-bar">
             <hr>
@@ -39,10 +39,34 @@
         </div>
     </header>
 
-    <div id="carousel-container">
-        <div id="carousel"></div>
-        <div id="image-controller"></div>
+    <div id="top-row">
+
+        <div id="carousel-container">
+            <div id="carousel"></div>
+            <div id="image-controller"></div>
+        </div>
+
+
+        <div id="widgets-container">
+
+            <div id="video-widget">
+                <h2>Football Highlight</h2>
+                <div id="highlight-container"></div>
+            </div>
+            <div id="odds-widget">
+                <h2>Today’s Odds</h2>
+                <table id="odds-table" class="odds-table">
+                    <tr><th>Match</th><th>Home</th><th>Draw</th><th>Away</th></tr>
+                </table>
+            </div>   
+            <div id="matches-feed">
+                <h2>Upcoming Matches</h2>
+                <ul id="matches-list"></ul>
+            </div>                 
+        </div>
     </div>
+
+
 
 
     <div id="content-and-widgets">
@@ -59,25 +83,6 @@
 
         </div>
 
-        
-        <div id="widgets-container">
-
-            <div id="video-widget">
-                <h2>Football Highlight</h2>
-                <div id="highlight-container"></div>
-            </div>
-            <div id="odds-widget">
-                <h2>Today’s Odds</h2>
-                <table id="odds-table" class="odds-table">
-                    <tr><th>Match</th><th>Home</th><th>Draw</th><th>Away</th></tr>
-                </table>
-            </div>   
-            <div id="matches-feed">
-                <h2>Upcoming Matches</h2>
-                <ul id="matches-list"></ul>
-              </div>
-                       
-        </div>
         
     </div>
 
