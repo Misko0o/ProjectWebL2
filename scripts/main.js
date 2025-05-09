@@ -22,61 +22,113 @@ const carouselImages = [
   const controlImagesOptions = ["../images/not_colored_circle.png", "../images/color_circle.png"];
   const currencyNames = ["EUR", "USD", "GBP", "CHF"];
   
-  /* --------------------------------------------------------------------------
-   *  News fetch & render
-   * --------------------------------------------------------------------------*/
-  function fetchAndDisplayNews(searchStr) {
-    fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem("theme")}`)
-      .then(r => r.json())
-      .then(data => {
-        const container = document.getElementById("content-container");
-        container.querySelectorAll(".article").forEach(a => container.removeChild(a));
-        const infoDiv = document.getElementById("noResults");
-        if (!data.length) {
-          infoDiv.textContent = "Sorry, your search returned no results :(";
-          infoDiv.style.display = "block";
-          return;
-        }
-        infoDiv.style.display = "none";
-  
-        data.forEach(news => {
-          const article = document.createElement("div");
-          article.className = "article";
-          article.id = news.id;
-  
-          const imgContainer = document.createElement("div");
-          imgContainer.className = "img-container";
-          const img = document.createElement("img");
-          img.src = news.image;
-          img.loading = "lazy";
-          imgContainer.appendChild(img);
-          imgContainer.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-  
-          const articleText = document.createElement("div");
-          articleText.className = "article-text";
-          const h2 = document.createElement("h3");
-          h2.className = "title";
-          h2.textContent = news.title;
-          h2.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-          const desc = document.createElement("p");
-          desc.className = "desc";
-          desc.textContent = news.content;
-          const dateAndBtn = document.createElement("div");
-          dateAndBtn.id = "date-and-btn";
-          const date = document.createElement("p");
-          date.textContent = news.date;
-          const commentBtn = document.createElement("button");
-          commentBtn.textContent = "View comments";
-          commentBtn.addEventListener("click", () => window.location = `../php_files/comments.php?id=${news.id}`);
-          dateAndBtn.append(date, commentBtn);
-  
-          articleText.append(h2, desc, dateAndBtn);
-          article.append(imgContainer, articleText);
-          container.appendChild(article);
-        });
-      })
-      .catch(err => console.error("Ошибка загрузки новостей:", err));
+/* --------------------------------------------------------------------------
+ * 2. Demo match stats (keyed по id новости)
+ * --------------------------------------------------------------------------*/
+const demoMatchStats = {
+  // пример: id новости 1
+  1: {
+    score: "Paris SG 3 – 1 Marseille",
+    possession: "62% / 38%",
+    shots: "15 / 9 (On target 7 / 3)",
+    mvp: {
+      name: "Kylian Mbappé",
+      stats: "2 гола · 1 голевая · 4 ударов в створ"
+    }
+  },
+  2: {
+    score: "Chelsea 2 – 2 Liverpool",
+    possession: "48% / 52%",
+    shots: "12 / 14 (On target 5 / 6)",
+    mvp: {
+      name: "Mohamed Salah",
+      stats: "1 гол · 1 пас · 90% пас точность"
+    }
   }
+  // добавь остальные id при желании
+};
+
+
+  /* --------------------------------------------------------------------------
+ * 3. News fetch & render (клик по картинке → expand stats)
+ * --------------------------------------------------------------------------*/
+function fetchAndDisplayNews(searchStr = "") {
+  fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem("theme")}`)
+    .then(r => r.json())
+    .then(data => {
+      const container = document.getElementById("content-container");
+      container.querySelectorAll(".article").forEach(a => a.remove());
+      const infoDiv = document.getElementById("noResults");
+      if (!data.length) {
+        infoDiv.textContent = "Sorry, your search returned no results :(";
+        infoDiv.style.display = "block";
+        return;
+      }
+      infoDiv.style.display = "none";
+
+      data.forEach(news => {
+        const article = document.createElement("div");
+        article.className = "article";
+        article.id = news.id;
+
+        const imgContainer = document.createElement("div");
+        imgContainer.className = "img-container";
+        const img = document.createElement("img");
+        img.src = news.image;
+        img.loading = "lazy";
+        imgContainer.appendChild(img);
+
+        // toggle stats expansion on click
+        img.addEventListener("click", () => toggleStats(article, news.id));
+
+        const articleText = document.createElement("div");
+        articleText.className = "article-text";
+        const h2 = document.createElement("h3");
+        h2.className = "title";
+        h2.textContent = news.title;
+        h2.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
+        const desc = document.createElement("p");
+        desc.className = "desc";
+        desc.textContent = news.content;
+        const dateAndBtn = document.createElement("div");
+        dateAndBtn.id = "date-and-btn";
+        const date = document.createElement("p");
+        date.textContent = news.date;
+        const commentBtn = document.createElement("button");
+        commentBtn.textContent = "View comments";
+        commentBtn.addEventListener("click", () => window.location = `../php_files/comments.php?id=${news.id}`);
+        dateAndBtn.append(date, commentBtn);
+
+        articleText.append(h2, desc, dateAndBtn);
+        article.append(imgContainer, articleText);
+        container.appendChild(article);
+      });
+    })
+    .catch(err => console.error("Ошибка загрузки новостей:", err));
+}
+
+function toggleStats(articleEl, newsId) {
+  let statsDiv = articleEl.querySelector(".match-stats");
+  if (statsDiv) {
+    // already rendered → toggle
+    statsDiv.hidden = !statsDiv.hidden;
+    return;
+  }
+  // create new
+  const data = demoMatchStats[newsId];
+  if (!data) return; // nothing to show
+
+  statsDiv = document.createElement("div");
+  statsDiv.className = "match-stats";
+  statsDiv.innerHTML = `
+    <hr>
+    <p><strong>Score:</strong> ${data.score}</p>
+    <p><strong>Possession:</strong> ${data.possession}</p>
+    <p><strong>Shots:</strong> ${data.shots}</p>
+    <p><strong>MVP:</strong> ${data.mvp.name}</p>
+    <p>${data.mvp.stats}</p>`;
+  articleEl.appendChild(statsDiv);
+}
   
   /* --------------------------------------------------------------------------
    *  Carousel
