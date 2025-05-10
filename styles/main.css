@@ -133,7 +133,7 @@ body{
     margin-left:0;
     padding: 2em 3em 2em 3em;
     border-radius: 8px;
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(248, 248, 194);
 }
 
 #content-header{
@@ -340,14 +340,30 @@ body{
 #matches-feed       { margin-top: 24px; }
 .match-card         { border: 1px solid #ccc; margin: 6px 0; cursor: pointer; }
 .match-head         { display: flex; justify-content: space-between; padding: 6px 10px; background: #f7f7f7; }
-.like-container{ display:flex; align-items:center; gap:6px; }  /* NEW */
-.like-btn{
-  border:none; border-radius:4px; cursor:pointer;
-  padding:2px 6px; background:var(--accent); color:#fff;        /* NEW */
-  font-size:0.9rem;
+.like-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.like-btn.liked{ background:#aaa; cursor:default; }            /* NEW */
-
+  
+.like-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+  
+.like-btn.liked {
+    background: #aaa;
+    cursor: default;
+}
+  
+.like-count {
+    font-weight: bold;
+}
+  
   
 
 /* ──────────────────────────────────────────────────────────────

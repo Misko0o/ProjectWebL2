@@ -72,109 +72,99 @@ function renderMatches() {
 
 
 
-function fetchAndDisplayNews(searchStr) {
-  fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem("theme")}`)
-    .then(r => r.json())
-    .then(data => {
-      const container = document.getElementById("content-container");
-      container.querySelectorAll(".article").forEach(a => container.removeChild(a));
-      const infoDiv = document.getElementById("noResults");
-      if (!data.length) {
-        infoDiv.textContent = "Sorry, your search returned no results :(";
-        infoDiv.style.display = "block";
-        return;
-      }
-      infoDiv.style.display = "none";
-
-      data.forEach(news => {
-        const article = document.createElement("div");
-        article.className = "article";
-        article.id = news.id;
-
-        /* картинка */
-        const imgC = document.createElement("div");
-        imgC.className = "img-container";
-        const img = document.createElement("img");
-        img.src = news.image;
-        img.loading = "lazy";
-        imgC.appendChild(img);
-
-        /* клик = переход */
-        img.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-
-        /* текстовый блок */
-        const txt = document.createElement("div");
-        txt.className = "article-text";
-        const h2 = document.createElement("h3");
-        h2.className = "title";
-        h2.textContent = news.title;
-        h2.addEventListener("click", () => window.location = `../php_files/news.php?id=${news.id}`);
-        const desc = document.createElement("p");
-        desc.className = "desc";
-        desc.textContent = news.content;
-
-        /* дата + комментарии + лайк */
-        const meta = document.createElement("div");
-        meta.id = "date-and-btn";
-        const date = document.createElement("p");
-        date.textContent = news.date;
-        const cmBtn = document.createElement("button");
-        cmBtn.textContent = "View comments";
-        cmBtn.addEventListener("click", () => window.location = `../php_files/comments.php?id=${news.id}`);
-
-        /* ---- like ---- */
-        const likeWrap = document.createElement("div");
-        likeWrap.className = "like-wrap";
-        const likeBtn = document.createElement("span");
-        likeBtn.className = "like-btn";
-        likeBtn.textContent = "👍";
-        const likeCnt = document.createElement("span");
-        likeCnt.className = "like-cnt";
-        likeCnt.textContent = news.likes ?? 0;
-
-        likeWrap.append(likeBtn, likeCnt);
-        likeBtn.addEventListener("click", () => handleLike(news.id, likeCnt));
-
-        meta.style.display = "flex";
-        meta.style.justifyContent = "space-between";
-        meta.append(date, cmBtn, likeWrap);
-
-        txt.append(h2, desc, meta);
-        article.append(imgC, txt);
-        container.appendChild(article);
-      });
-    })
-    .catch(e => console.error("fetch news", e));
-}
-
-/* ---------- like logic ---------- */
-function handleLike(id, cntSpan){
-  // избегаем двойного лайка от одного пользователя
-  if(localStorage.getItem(`liked_${id}`)) return;
-  fetch("../php_files/like.php", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({id})
-  }).then(r=>r.json()).then(d=>{
-    cntSpan.textContent = d.likes;
-    localStorage.setItem(`liked_${id}`, "1");
-  }).catch(console.error);
-}
-
-function pollLikes(){
-  const ids = Array.from(document.querySelectorAll('.article')).map(a=>a.id);
-  if(!ids.length) return;
-  fetch(`../php_files/likes.php?ids=${ids.join(',')}`)
-    .then(r=>r.json())
-    .then(map=>{
-      ids.forEach(id=>{
-        const span = document.querySelector(`#content-container .article[id='${id}'] .like-cnt`);
-        if(span && map[id]!==undefined) span.textContent = map[id];
-      });
-    }).catch(()=>{});
-}
-setInterval(pollLikes, 10000); // 10 с
-
+  /* --------------------------------------------------------------------------
+   *  News fetch & render
+   * --------------------------------------------------------------------------*/
+  function fetchAndDisplayNews(searchStr) {
+    fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem('theme')}`)
+      .then(r => r.json())
+      .then(data => {
+        const container = document.getElementById('content-container');
+        container.querySelectorAll('.article').forEach(a => a.remove());
+        const info = document.getElementById('noResults');
+        if (!data.length) {
+          info.textContent = 'Sorry, your search returned no results :(';
+          info.style.display = 'block';
+          return;
+        }
+        info.style.display = 'none';
+  
+        data.forEach(news => {
+          // 1) базовая вёрстка статьи
+          const art = document.createElement('div');
+          art.className = 'article';
+          art.id = news.id;
+  
+          const imgBox = document.createElement('div');
+          imgBox.className = 'img-container';
+          const img = new Image();
+          img.src = news.image;
+          img.loading = 'lazy';
+          imgBox.appendChild(img);
+          imgBox.addEventListener('click', () => window.location = `../php_files/news.php?id=${news.id}`);
+  
+          const text = document.createElement('div');
+          text.className = 'article-text';
+          const h2 = document.createElement('h3');
+          h2.className = 'title';
+          h2.textContent = news.title;
+          h2.addEventListener('click', () => window.location = `../php_files/news.php?id=${news.id}`);
+  
+          const desc = document.createElement('p');
+          desc.className = 'desc';
+          desc.textContent = news.content;
+  
+          const foot = document.createElement('div');
+          foot.id = 'date-and-btn';
+          foot.style.display = 'flex';
+          foot.style.justifyContent = 'space-between';
+  
+          const date = document.createElement('p');
+          date.textContent = news.date;
+  
+          const cBtn = document.createElement('button');
+          cBtn.textContent = 'View comments';
+          cBtn.addEventListener('click', () => window.location = `../php_files/comments.php?id=${news.id}`);
+  
+          foot.append(date, cBtn);
+  
+          // 2) вот здесь вставляем лайк-контейнер **внутри** цикла**
+          const likeWrap = document.createElement('div');
+          likeWrap.className = 'like-container';
+  
+          const likeBtn = document.createElement('button');
+          likeBtn.className = 'like-btn';
+          likeBtn.textContent = '👍';
+  
+          const likeCnt = document.createElement('span');
+          likeCnt.className = 'like-count';
+          likeCnt.textContent = news.likes || 0;
+  
+          likeBtn.addEventListener('click', async () => {
+            if (localStorage.getItem(`liked_${news.id}`)) return;
+            const res = await fetch('../php_files/like.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: news.id })
+            }).then(r => r.json());
+            likeCnt.textContent = res.likes;
+            likeBtn.classList.add('liked');
+            localStorage.setItem(`liked_${news.id}`, '1');
+          });
+  
+          likeWrap.append(likeBtn, likeCnt);
+          foot.append(likeWrap);
+          // /лайк
+  
+          // 3) собрать все и вставить в контейнер
+          text.append(h2, desc, foot);
+          art.append(imgBox, text);
+          container.appendChild(art);
+        });
+      })
+      .catch(err => console.error('Ошибка загрузки новостей:', err));
+  }
+          
 
   /* --------------------------------------------------------------------------
    *  Carousel
@@ -371,7 +361,7 @@ function startLiveTicker(){
     renderOdds();
     renderMatches();
     initThemeToggle();          
-    startLiveTicker(); 
+    
 
     // search bar ---------------------------------------------------------------
     document.getElementById("searchInput").addEventListener("input", (e) => {
@@ -380,12 +370,12 @@ function startLiveTicker(){
   
     // scroll to news -----------------------------------------------------------
     const contentContainer = document.getElementById("content-container");
-    document
-      .getElementById("contentSearchBtn")
-      .addEventListener("click", () => {
+    const scrollBtn = document.getElementById("contentSearchBtn");
+    if (scrollBtn) {
+      scrollBtn.addEventListener("click", () => {
         contentContainer.scrollIntoView({ behavior: "smooth", block: "start" });
       });
-  
+    }
     // theme filter -------------------------------------------------------------
     document.querySelectorAll("#themes-container p").forEach((p) => {
       p.addEventListener("click", () => {

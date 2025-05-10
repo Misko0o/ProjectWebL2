@@ -11,15 +11,21 @@ if (file_exists($csv)){
 $found = false;
 foreach($likes as &$row){
   if ($row[0] == $id){
-    $row[1] = intval($row[1])+1;
+    $row[1] = intval($row[1]) + 1;
     $found = true;
   }
 }
-if (!$found){ $likes[] = [$id,1]; }
 
-$fp = fopen($csv,'w');
-foreach($likes as $r) fputcsv($fp,$r);
+if (!$found) {
+    $likes[] = [$id, 1];
+}
+
+$fp = fopen($csv, 'w');
+foreach ($likes as $r) {
+    fputcsv($fp, $r);
+}
 fclose($fp);
+
 
 $currentLikes = 0;
 foreach ($likes as $r) {
