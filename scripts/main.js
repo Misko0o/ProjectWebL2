@@ -128,33 +128,44 @@ function renderMatches() {
   
           foot.append(date, cBtn);
   
-          // 2) вот здесь вставляем лайк-контейнер **внутри** цикла**
+                  // === like/unlike ===
           const likeWrap = document.createElement('div');
           likeWrap.className = 'like-container';
-  
+
           const likeBtn = document.createElement('button');
           likeBtn.className = 'like-btn';
           likeBtn.textContent = '👍';
-  
+
           const likeCnt = document.createElement('span');
           likeCnt.className = 'like-count';
           likeCnt.textContent = news.likes || 0;
-  
+
+          // блокируем или снимаем лайк
           likeBtn.addEventListener('click', async () => {
-            if (localStorage.getItem(`liked_${news.id}`)) return;
+            const key = `liked_${news.id}`;
+            const isLiked = !!localStorage.getItem(key);
+            const body = { id: news.id, remove: isLiked };
+
             const res = await fetch('../php_files/like.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ id: news.id })
+              body: JSON.stringify(body)
             }).then(r => r.json());
+
             likeCnt.textContent = res.likes;
-            likeBtn.classList.add('liked');
-            localStorage.setItem(`liked_${news.id}`, '1');
+            if (isLiked) {
+              likeBtn.classList.remove('liked');
+              localStorage.removeItem(key);
+            } else {
+              likeBtn.classList.add('liked');
+              localStorage.setItem(key, '1');
+            }
           });
-  
+
           likeWrap.append(likeBtn, likeCnt);
           foot.append(likeWrap);
-          // /лайк
+          // === end like/unlike ===
+
   
           // 3) собрать все и вставить в контейнер
           text.append(h2, desc, foot);
