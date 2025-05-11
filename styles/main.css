@@ -402,7 +402,36 @@ body{
     /* например, даём им 100% ширины сайдбара */
     width: 100%;
   }
+
+#widgets-container table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: var(--bg);
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
   
+  #widgets-container th,
+  #widgets-container td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  #widgets-container thead {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  #widgets-container tr:last-child td {
+    border-bottom: none;
+  }
+  
+
   /* ──────────────────────────────────────────────────────────────
      2.  Сама карусель делаем ниже
      ──────────────────────────────────────────────────────────────*/
