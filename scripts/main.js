@@ -242,7 +242,7 @@ function renderMatches() {
   }
   
   /* --------------------------------------------------------------------------
-   *  Football highlight (replaces weather)
+   *  Football highlight 
    * --------------------------------------------------------------------------*/
   function embedHighlight() {
     const box = document.getElementById("highlight-container");
@@ -252,7 +252,7 @@ function renderMatches() {
   }
   
   /* --------------------------------------------------------------------------
- * 5. Demo odds widget (instead of currency converter)
+ * 5. Demo odds widget 
  * --------------------------------------------------------------------------*/
 const demoOdds = [
     { match: "Man City vs Real Madrid",  home: 1.95, draw: 3.80, away: 3.60 },
@@ -338,14 +338,18 @@ function initThemeToggle() {
 }
 
 /* ---------- demo live-scores ---------- */
-function getLiveScores(){
-  // в реальном проекте заменить на fetch('/api/live_scores.php')
-  return Promise.resolve([
-    "Ligue 1 · PSG 2-0 Lyon (70')",
-    "Premier League · Arsenal 1-1 Chelsea (HT)",
-    "Roland-Garros · Alcaraz def. Zverev 6-4 6-3"
-  ]);
+async function getLiveScores() {
+  try {
+    const resp = await fetch('/php_files/live_scores.php');
+    if (!resp.ok) throw new Error('Live-scores error');
+    const arr = await resp.json();
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    console.error('Error fetching live scores:', e);
+    return [];
+  }
 }
+
 
 function startLiveTicker(){
   const span = document.getElementById('ticker-text');
@@ -372,7 +376,7 @@ function startLiveTicker(){
     renderOdds();
     renderMatches();
     initThemeToggle();          
-    
+    startLiveTicker(); 
 
     // search bar ---------------------------------------------------------------
     document.getElementById("searchInput").addEventListener("input", (e) => {
