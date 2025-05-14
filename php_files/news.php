@@ -9,6 +9,7 @@ function getNewsById($id) {
                 return $data;
             }
         }
+        $news = getNewsById($id);
         fclose($handle);
     }
     return null;
@@ -30,7 +31,7 @@ $news = getNewsById($id);
         <h1><?php echo $news[1]; ?></h1>
 
         <div class="container">
-            <img src="<?php echo htmlspecialchars($news[3], ENT_QUOTES, 'UTF-8'); ?>" alt="image" width="500" >
+            <img src="<?php echo htmlspecialchars($news[3], ENT_QUOTES, 'UTF-8'); ?>" alt="image" width="500">
         </div>
     
         <p><?php echo $news[2]; ?></p>
