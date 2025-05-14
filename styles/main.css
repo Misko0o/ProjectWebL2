@@ -457,6 +457,7 @@ body{
 }
 
 .match-card:hover {
+  background-color: var(--bg);
   box-shadow: 0 2px 6px rgba(0, 60, 255, 0.2);
   border: 1px solid #007bff;
 }
