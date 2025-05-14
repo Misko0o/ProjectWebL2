@@ -4,7 +4,7 @@ $id = $_GET['id'];
 
 function getNewsById($id) {
     if (($handle = fopen("../csv_files/news.csv", "r")) !== FALSE) {
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
             if ($data[0] == $id) {
                 return $data;
             }

@@ -1,4 +1,4 @@
-let themes = ["Politique", "Economie", "Sport", "Culture", "Science", "Voyage"];
+let themes = ["Santé", "Basket", "Football", "Rally", "Tennis", "Rugby","Autres"];
 
 function transformToDict(pureForm){
     let themeSelector = document.getElementsByTagName("select");
@@ -7,12 +7,13 @@ function transformToDict(pureForm){
     formData.forEach(function(value, key){
         formDataObject[key] = value;
     });
-    formDataObject["theme"] = themes[themeSelector[0].selectedIndex];
-    formDataObject["email"] = localStorage.getItem("user");
-
+    
     for (let key in formDataObject) {
         formDataObject[key] = formDataObject[key].replace(/[\r\n]+/g, "");
     }
+
+    formDataObject["theme"] = themes[themeSelector[0].selectedIndex];
+    formDataObject["email"] = localStorage.getItem("user");
 
     return formDataObject;
 }

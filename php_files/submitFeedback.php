@@ -2,7 +2,7 @@
 
     function createRecordCSV($data){
         $open = fopen("../csv_files/news.csv", "a");
-        fputcsv($open, $data["vals"]);
+        fputcsv($open, $data["vals"],";");
         fclose($open);
         return TRUE;
     }
