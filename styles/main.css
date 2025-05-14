@@ -9,7 +9,7 @@ body{
     --text:          #000;
     --accent:        #1D57F2;
     --border:        #ddd;
-    --newsbg:        #F8F8C2;
+    --newsbg:        #f9f9eb;
   }
   
   /* тёмная тема (переключаем data-атрибутом на <html>) */
@@ -19,7 +19,7 @@ body{
     --text:    #e2e2e2;
     --accent:  #4d8dff;
     --border:  #333;
-    --newsbg:  #999955 ;
+    --newsbg:  #f9f9eb ;
 }
   
 #themeToggle{
