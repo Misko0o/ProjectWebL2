@@ -21,7 +21,7 @@ h1 {
     padding: 20px;
     margin: 20px auto;
     border-radius: 5px;
-    max-width: 800px; /* Ограничиваем ширину для улучшения читабельности */
+    max-width: 800px; 
 }
 
 .news-summary h2, .full-news h1 {
@@ -64,12 +64,12 @@ a:hover {
 
 .container {
     display: flex;
-    justify-content: center; /* Горизонтальное центрирование */
-    align-items: center; /* Вертикальное центрирование */
-    height: 100%; /* Занимает всю высоту видимой области */
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
 }
 
 .container img {
-    max-width: 100%; /* Ограничение ширины изображения */
-    max-height: 100%; /* Ограничение высоты изображения */
+    max-width: 100%; 
+    max-height: 100%; 
 }

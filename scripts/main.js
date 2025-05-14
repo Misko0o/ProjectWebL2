@@ -1,8 +1,4 @@
-// ================== main.js (weather removed, football highlight added) ==================
 
-/* --------------------------------------------------------------------------
- *  Static data (carousel images & captions, currency names)
- * --------------------------------------------------------------------------*/
 const carouselImages = [
     "https://images.rtl.fr/~c/770v513/rtl/www/1693008-leon-marchand-avec-sa-medaille-d-or-du-200-m-brasse-le-31-juillet-2024-a-paris-la-defense.jpg",
     "https://media.ouest-france.fr/v1/pictures/MjAyNTA1Y2FiZWVjYjNkZjMwMDUxMTQzMTA3Mjg2YWE4ZWY2NTU?width=630&height=354&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=9dd4f95237b78e35ea3f867c54d81635c1cbd1edc64c0144b93ba2bf912bb2b3",
@@ -22,10 +18,7 @@ const carouselImages = [
   const controlImagesOptions = ["../images/not_colored_circle.png", "../images/color_circle.png"];
   const currencyNames = ["EUR", "USD", "GBP", "CHF"];
   
-/* --------------------------------------------------------------------------
- * 2. Upcoming matches (next week)
- * --------------------------------------------------------------------------*/
-/* === 1.  STATIC LIST OF MATCHES  ======================================= */
+
 const upcomingMatches = [
   {
     id: 101,
@@ -50,11 +43,10 @@ const upcomingMatches = [
   }
 ];
 
-/* === 2.  RENDER FUNCTION  ============================================= */
 function renderMatches() {
   const ul = document.getElementById("matches-list");
   if (!ul) return;
-  ul.innerHTML = "";                       // очистить старый вывод
+  ul.innerHTML = "";                       
   upcomingMatches.forEach(m => {
     const li = document.createElement("li");
     li.className = "match-card";
@@ -72,9 +64,6 @@ function renderMatches() {
 
 
 
-  /* --------------------------------------------------------------------------
-   *  News fetch & render
-   * --------------------------------------------------------------------------*/
   function fetchAndDisplayNews(searchStr) {
     fetch(`../php_files/publication_news.php?search=${searchStr}&theme=${localStorage.getItem('theme')}`)
       .then(r => r.json())
@@ -90,7 +79,7 @@ function renderMatches() {
         info.style.display = 'none';
   
         data.forEach(news => {
-          // 1) базовая вёрстка статьи
+          
           const art = document.createElement('div');
           art.className = 'article';
           art.id = news.id;
@@ -128,7 +117,6 @@ function renderMatches() {
   
           foot.append(date, cBtn);
   
-                  // === like/unlike ===
           const likeWrap = document.createElement('div');
           likeWrap.className = 'like-container';
 
@@ -140,7 +128,6 @@ function renderMatches() {
           likeCnt.className = 'like-count';
           likeCnt.textContent = news.likes || 0;
 
-          // блокируем или снимаем лайк
           likeBtn.addEventListener('click', async () => {
             const key = `liked_${news.id}`;
             const isLiked = !!localStorage.getItem(key);
@@ -164,10 +151,6 @@ function renderMatches() {
 
           likeWrap.append(likeBtn, likeCnt);
           foot.append(likeWrap);
-          // === end like/unlike ===
-
-  
-          // 3) собрать все и вставить в контейнер
           text.append(h2, desc, foot);
           art.append(imgBox, text);
           container.appendChild(art);
@@ -177,9 +160,6 @@ function renderMatches() {
   }
           
 
-  /* --------------------------------------------------------------------------
-   *  Carousel
-   * --------------------------------------------------------------------------*/
   function createControlImages() {
     const ctrl = document.getElementById("image-controller");
     carouselImages.forEach((_, i) => {
@@ -241,19 +221,13 @@ function renderMatches() {
     });
   }
   
-  /* --------------------------------------------------------------------------
-   *  Football highlight 
-   * --------------------------------------------------------------------------*/
   function embedHighlight() {
     const box = document.getElementById("highlight-container");
     if (!box) return;
-    const YT_ID = "-H8tvnWaYs4"; // Chelsea – Liverpool 05‑May‑2025 highlight
+    const YT_ID = "-H8tvnWaYs4"; 
     box.innerHTML = `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${YT_ID}" title="Football highlight" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
   }
   
-  /* --------------------------------------------------------------------------
- * 5. Demo odds widget 
- * --------------------------------------------------------------------------*/
 const demoOdds = [
     { match: "Man City vs Real Madrid",  home: 1.95, draw: 3.80, away: 3.60 },
     { match: "Arsenal vs Bayern",       home: 2.20, draw: 3.50, away: 3.10 },
@@ -271,9 +245,6 @@ const demoOdds = [
     });
   }
   
-/* --------------------------------------------------------------------------
- * 6. Matches feed (demo data with collapsible stats)
- * --------------------------------------------------------------------------*/
 const demoMatches = [
   { id: 1, home: "Man City", away: "Real Madrid", time: "Sat 19:30" },
   { id: 2, home: "Bayern",   away: "Juventus",   time: "Sun 21:45" },
@@ -314,9 +285,6 @@ function toggleStats(id) {
   }
 }
 
-/* ──────────────────────────────────────────────────────────────
- * 6.  Theme toggle (dark / light)
- * ──────────────────────────────────────────────────────────────*/
 function applyTheme(th) {
   document.documentElement.dataset.theme = th;
   localStorage.setItem('themePref', th);
@@ -324,7 +292,7 @@ function applyTheme(th) {
 
 function initThemeToggle() {
   const btn = document.getElementById('themeToggle');
-  if (!btn) return;                     // кнопка не нарисовалась → выходим
+  if (!btn) return;                     
 
   const saved = localStorage.getItem('themePref') || 'light';
   applyTheme(saved);
@@ -337,7 +305,6 @@ function initThemeToggle() {
   });
 }
 
-/* ---------- demo live-scores ---------- */
 async function getLiveScores() {
   try {
     const resp = await fetch('/php_files/live_scores.php');
@@ -360,12 +327,9 @@ function startLiveTicker(){
     span.textContent = scores.join("   ⚽   ");
   }
   update();
-  setInterval(update, 15000);   // каждые 15 секунд
+  setInterval(update, 15000);   
 }
 
-  // -----------------------------------------------------------------------------
-  // 7. Main entry
-  // -----------------------------------------------------------------------------
   
   window.onload = () => {
     if (!localStorage.getItem("theme")) localStorage.setItem("theme", "Toutes");
@@ -378,12 +342,10 @@ function startLiveTicker(){
     initThemeToggle();          
     startLiveTicker(); 
 
-    // search bar ---------------------------------------------------------------
     document.getElementById("searchInput").addEventListener("input", (e) => {
       fetchAndDisplayNews(e.target.value);
     });
   
-    // scroll to news -----------------------------------------------------------
     const contentContainer = document.getElementById("content-container");
     const scrollBtn = document.getElementById("contentSearchBtn");
     if (scrollBtn) {
@@ -391,7 +353,6 @@ function startLiveTicker(){
         contentContainer.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
-    // theme filter -------------------------------------------------------------
     document.querySelectorAll("#themes-container p").forEach((p) => {
       p.addEventListener("click", () => {
         localStorage.setItem("theme", p.innerText);
@@ -400,7 +361,6 @@ function startLiveTicker(){
       });
     });
   
-    // auth / add news ----------------------------------------------------------
     const loginBtn = document.getElementById("btn");
     const addBtn = document.getElementById("addArticle");
     let isLogged = localStorage.getItem("loggedin") === "true";

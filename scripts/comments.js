@@ -1,24 +1,12 @@
-// ===================== comments.js (live update version) =====================
-//  ► Предполагается, что comments.php по URL
-//      ../php_files/comments.php?id=123&json=1
-//    отдаёт JSON-массив вида [{user:"mail@ex", text:"…", ts:"2025‑05‑08 10:22"}, …]
-//  ► В HTML‑шаблоне comments.php должен быть контейнер:
-//      <div id="comments-list"></div>
-// -----------------------------------------------------------------------------
-
 window.onload = () => {
-    /* ----------------------------------------------------------
-     * 0.  Получаем id новости из query‑string
-     * --------------------------------------------------------*/
+    
     const params   = new URLSearchParams(window.location.search);
     const newsId   = params.get("id");
     const listBox  = document.getElementById("comments-list");
   
-    /* ----------------------------------------------------------
-     * 1.  Рендер списка комментариев
-     * --------------------------------------------------------*/
+    
     function renderComments(arr) {
-      listBox.replaceChildren();           // очистить
+      listBox.replaceChildren();           
       arr.forEach(c => {
         const div = document.createElement("div");
         div.className = "comment-item";
@@ -27,25 +15,21 @@ window.onload = () => {
       });
     }
   
-    /* ----------------------------------------------------------
-     * 2.  Загрузка с сервера + polling каждые 5 сек
-     * --------------------------------------------------------*/
+    
     async function loadComments() {
       try {
         const res  = await fetch(`../php_files/comments.php?id=${newsId}&json=1`);
         if (!res.ok) throw new Error("HTTP " + res.status);
-        const data = await res.json();     // [{user,text,ts}, …]
+        const data = await res.json();     
         renderComments(data);
       } catch (err) {
         console.error("Ошибка загрузки комментариев:", err);
       }
     }
     loadComments();
-    const poller = setInterval(loadComments, 5000); // 5 сек
+    const poller = setInterval(loadComments, 5000); 
   
-    /* ----------------------------------------------------------
-     * 3.  Отправка нового комментария (только если авторизован)
-     * --------------------------------------------------------*/
+    
     if (localStorage.getItem("user")) {
       const container = document.getElementById("create-comment-container");
       container.style.display = "flex";
@@ -65,16 +49,14 @@ window.onload = () => {
             body: JSON.stringify(payload)
           });
           input.value = "";
-          loadComments();  // мгновенно подтягиваем список
+          loadComments();  
         } catch (err) {
           console.error("Ошибка отправки комментария:", err);
         }
       });
     }
   
-    /* ----------------------------------------------------------
-     * 4.  Очистка при уходе со страницы
-     * --------------------------------------------------------*/
+    
     window.addEventListener("beforeunload", () => clearInterval(poller));
   };
   

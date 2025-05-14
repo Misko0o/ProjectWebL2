@@ -3,7 +3,6 @@ body{
     color: var(--text);
 }
 :root {
-    /* светлая тема по умолчанию */
     --bg:            #f5f5f5;
     --card-bg:       #ffffff;
     --text:          #000;
@@ -12,7 +11,6 @@ body{
     --newsbg:        #f9f9eb;
   }
   
-  /* тёмная тема (переключаем data-атрибутом на <html>) */
   html[data-theme='dark'] {
     --bg:      #121212;
     --card-bg: #1e1e1e;
@@ -47,7 +45,7 @@ body{
     padding:0 2em;
 }
 
-#live-ticker{                 /* <-- new */
+#live-ticker{                 
     flex:1;
     text-align:center;
     font-size:1.1rem;
@@ -67,7 +65,7 @@ body{
     100% { transform:translateX(-100%); }
 }
 
-#logo-left img{               /* <-- new */
+#logo-left img{             
     width:60px;
   }
 
@@ -209,7 +207,7 @@ body{
 }
 
 .desc{
-    flex: 0 0 45%; /* Занимают вместе 70% высоты .article-text */
+    flex: 0 0 45%; 
     overflow: hidden;
 }
 
@@ -264,11 +262,11 @@ body{
 .carousel-caption {
     position: absolute;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /*Темный полупрозрачный фон для лучшей читаемости текста */
+    background: rgba(0, 0, 0, 0.5); 
     color: white;
     width: 100%;
     padding: 1.5em;
-    box-sizing: border-box;  /*Убедитесь, что padding не изменяет размеры элемента */
+    box-sizing: border-box;  
     text-align: left;
 }
 
@@ -292,9 +290,9 @@ body{
 }
 
 #content-and-widgets{
-    display: flex;                    /* уже есть */
-    align-items: flex-start;          /* уже есть */
-    justify-content: space-between;   /* CHG: вместо center даём место между */
+    display: flex;                    
+    align-items: flex-start;          
+    justify-content: space-between;   
     gap: 20px;  
 }
 
@@ -373,23 +371,20 @@ body{
   
   
 
-/* ──────────────────────────────────────────────────────────────
-   1.  Общий ряд (карусель + виджеты)
-   ──────────────────────────────────────────────────────────────*/
-   #top-row{                             /* <-- new */
-    display:flex;                       /* <-- new */
-    justify-content:center;             /* <-- new */
-    gap:20px;                           /* <-- new: расстояние между колонками */
-    margin-top:1.5em;                   /* <-- new: тот же отступ, что и было у #carousel-container */
+
+   #top-row{                            
+    display:flex;                      
+    justify-content:center;             
+    gap:20px;                           
+    margin-top:1.5em;                   
+   }
+  
+  #carousel-container{                  
+    flex:0 0 65%;                      
+    margin:0;                           
   }
   
-  /* переиспользуем уже существующие id, просто даём им размеры внутри #top-row */
-  #carousel-container{                  /* изменено  */
-    flex:0 0 65%;                       /* <-- new: ширина ≈ 65 % */
-    margin:0;                           /* <-- new: убираем внешние отступы */
-  }
-  
-/* Conteneur principal */
+
 #widgets-container {
   width: 30%;
   position: sticky;
@@ -402,12 +397,12 @@ body{
   font-family: sans-serif;
 }
 
-/* Chaque widget à l'intérieur */
+
 #widgets-container > div {
   width: 100%;
 }
 
-/* Table des cotes */
+
 #widgets-container table {
   border-collapse: collapse;
   width: 100%;
@@ -437,14 +432,12 @@ body{
   border-bottom: none;
 }
 
-/* Liste des matchs */
 #matches-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Carte cliquable pour chaque match */
 .match-card {
   display: block;
   padding: 10px;
@@ -462,12 +455,10 @@ body{
   border: 1px solid #007bff;
 }
 
-/* S'assurer qu'aucun fond blanc parasite ne gêne à l'intérieur */
 .match-card * {
   background: transparent;
 }
 
-/* En-tête d’un match */
 .match-head {
   display: flex;
   justify-content: space-between;
@@ -475,25 +466,19 @@ body{
   font-weight: bold;
 }
 
-  /* ──────────────────────────────────────────────────────────────
-     2.  Сама карусель делаем ниже
-     ──────────────────────────────────────────────────────────────*/
   #carousel{
-    width:100%;                         /* было 70%, заменяем  */ /* <-- new */
-    height:60vh;                        /* было 75vh, уменьшили */ /* <-- new */
+    width:100%;                         
+    height:60vh;                        
   }
   
   #carousel .carousel-item img{
-    height:60vh;                        /* sync с контейнером */   /* <-- new */
+    height:60vh;                        
   }
   
-  /* ──────────────────────────────────────────────────────────────
-     3.  Адаптив: на узких экранах переводим всё в столбик
-     ──────────────────────────────────────────────────────────────*/
-  @media (max-width:900px){             /* <-- new */
+ 
+  @media (max-width:900px){             
     #top-row{ flex-direction:column; }
     #content-container, #widgets-container{ width:100%; }
     #carousel{ height:45vh; }
     #carousel .carousel-item img{ height:45vh; }
   }
-  
